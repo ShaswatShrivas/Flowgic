@@ -21,9 +21,9 @@ const spaceG = localfont({
 
 export const metadata: Metadata = {
   title: "",
-  description: 
-  "A community-driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structures, and more.",
-  icons:{
+  description:
+    "A community-driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structures, and more.",
+  icons: {
     icon: "/favicon.ico",
   }
 };
@@ -37,20 +37,27 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <SessionProvider session = {session}>
-      <body
-className={`${inter.className} ${spaceG.variable} antialiased`}
->
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+      <head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+        />
+      </head>
+      <SessionProvider session={session}>
+        <body
+          className={`${inter.className} ${spaceG.variable} antialiased`}
         >
-          {children}
-        </ThemeProvider>
-        <Toaster/>
-      </body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+          <Toaster />
+        </body>
       </SessionProvider>
     </html>
   )

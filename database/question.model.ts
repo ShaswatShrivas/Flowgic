@@ -1,23 +1,32 @@
-import { model, models, Schema, Types } from "mongoose";
+import { Schema, models, model, Types, Document } from "mongoose";
 
-export interface IInteraction {
-  user: Types.ObjectId;
-  action: string;
-  actionId: Types.ObjectId;
-  actionType: "question" | "answer";
+export interface IQuestion {
+  title: string;
+  content: string;
+  tags: Types.ObjectId[];
+  views: number;
+  answers: number;
+  upvotes: number;
+  downvotes: number;
+  author: Types.ObjectId;
 }
 
-const InteractionSchema = new Schema<IInteraction>(
+export interface IQuestionDoc extends IQuestion, Document {}
+const QuestionSchema = new Schema<IQuestion>(
   {
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    action: { type: String, required: true },
-    actionId: { type: Schema.Types.ObjectId, required: true },
-    actionType: { type: String, enum: ["question", "answer"], required: true },
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
+    views: { type: Number, default: 0 },
+    answers: { type: Number, default: 0 },
+    upvotes: { type: Number, default: 0 },
+    downvotes: { type: Number, default: 0 },
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-const Interaction =
-  models?.Interaction || model<IInteraction>("Interaction", InteractionSchema);
+const Question =
+  models?.Question || model<IQuestion>("Question", QuestionSchema);
 
-export default Interaction;
+export default Question;
